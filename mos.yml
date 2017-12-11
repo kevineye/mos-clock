@@ -1,0 +1,36 @@
+author: mongoose-os
+description: A Mongoose OS app skeleton
+version: 1.0
+
+libs_version: ${mos.version}
+modules_version: ${mos.version}
+mongoose_os_version: ${mos.version}
+
+filesystem:
+  - fs
+
+sources:
+  - src
+
+libs:
+  - origin: https://github.com/mongoose-os-libs/ca-bundle
+  - origin: https://github.com/mongoose-os-libs/rpc-service-config
+  - origin: https://github.com/mongoose-os-libs/rpc-service-fs
+  - origin: https://github.com/mongoose-os-libs/rpc-uart
+  - origin: https://github.com/mongoose-os-libs/ota-http-server
+  - origin: https://github.com/mongoose-os-libs/wifi
+  - origin: https://github.com/mongoose-os-libs/mjs
+  - origin: https://github.com/mongoose-os-libs/prometheus-metrics
+  - origin: https://github.com/mongoose-os-libs/arduino-adafruit-ssd1306
+
+config_schema:
+  - ["i2c.enable", true]
+  - ["i2c.sda_gpio", 4]
+  - ["i2c.scl_gpio", 15]
+  - ["i2c.debug", true]
+  - ["app", "o", {title: "Custom app settings"}]
+  - ["app.ssd1306_reset_pin", "i", 16, {title: "SSD1306 display reset pin"}]
+  - ["app.darksky_interval", "i", 300, {title: "DarkSky weather forecast refresh interval in seconds (stick to < 1000/day"}]
+  - ["app.darksky_key", "s", "", {title: "DarkSky API key (https://darksky.net/dev/register)"}]
+
+manifest_version: 2017-05-18
