@@ -70,13 +70,14 @@ function updateDisplay() {
     } else {
         weatherText = "Loading forecast...";
     }
+    display.setFont("default");
     display.setTextColor(Adafruit_SSD1306.WHITE);
-    display.setTextSize(2);
+    display.setFont("FreeSansBold12pt7b");
     display.setCursor(0, 0);
     display.write(timeText);
-    display.setTextSize(1);
+    display.setFont("default");
     display.write(amPmText);
-    let timeWidth = display.getCursorX() + 2;
+    let timeWidth = display.getCursorX() + 3;
     display.setCursor(0, 0);
     display.write(dateText);
     let dateWidth = display.getCursorX();
@@ -87,11 +88,11 @@ function updateDisplay() {
     display.drawFastHLine(0, 48, 128, Adafruit_SSD1306.WHITE);
     display.setCursor(64-Math.floor(dateWidth/2), 4);
     display.write(dateText);
-    display.setCursor(64-Math.floor(timeWidth/2), 22);
-    display.setTextSize(2);
+    display.setCursor(64-Math.floor(timeWidth/2), 31);
+    display.setFont("FreeSansBold12pt7b");
     display.write(timeText);
-    display.setCursor(display.getCursorX()+2, display.getCursorY()+6);
-    display.setTextSize(1);
+    display.setCursor(display.getCursorX()+3, display.getCursorY());
+    display.setFont("default");
     display.write(amPmText);
     display.setCursor(64-Math.floor(weatherWidth/2), 52);
     display.write(weatherText);
