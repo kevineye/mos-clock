@@ -8,18 +8,27 @@ load('geoip.js');
 load('ssd1306.js');
 
 let display = SSD1306.init();
-Timer.set(500, 0, function () {
+Timer.set(1000, 0, function () {
     SSD1306.poweredByDarkSky(display);
 }, null);
 
-Timer.set(1000, 0, function () {
+// update every second for first 60 seconds to display NTP update ASAP
+let initialTimer;
+Timer.set(2000, 0, function() {
     DarkSky.callback = updateDisplay;
+    initialTimer = Timer.set(1000, Timer.REPEAT, updateDisplay, null);
+    updateDisplay();
+}, null);
+
+// after 60 seconds switch to only updating exactly when the minute changes
+Timer.set(60000, 0, function () {
     let offset = 60000 - (Math.round(Timer.now()*1000) % 60000) + 10;
     Log.info("time is " + Timer.fmt("%c") + ", syncing display in " + JSON.stringify(offset) + " ms");
     Timer.set(offset, 0, function() {
+        Timer.del(initialTimer);
         Timer.set(60000, Timer.REPEAT, updateDisplay, null);
+        updateDisplay();
     }, null);
-    updateDisplay();
 }, null);
 
 let weather = {};
@@ -41,7 +50,11 @@ function updateDisplay() {
     }
     let dateText = Timer.fmt("%a %b %e, %Y", now);
     let timeText = Timer.fmt("%I:%M", now);
-    let amPmText = Timer.fmt("%P,%p", now).slice(0,2); // seems to be a bug with Timer.fmt("%P") by itself
+    let amPmText = Timer.fmt("%P,%p", now).slice(0,2); // seems to be a bug with Timer.fmt("%p") by itself
+    if (now < 100000) {
+        dateText = "Loading time...";
+        timeText = amPmText = "";
+    }
 
     let weatherText;
     if (weather.currently) {
