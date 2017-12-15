@@ -50,6 +50,9 @@ function updateDisplay() {
     }
     let dateText = Timer.fmt("%a %b %e, %Y", now);
     let timeText = Timer.fmt("%I:%M", now);
+    if (timeText.slice(0, 1) === "0") {
+        timeText = timeText.slice(1);
+    }
     let amPmText = Timer.fmt("%P,%p", now).slice(0,2); // seems to be a bug with Timer.fmt("%p") by itself
     if (now < 100000) {
         dateText = "Loading time...";
