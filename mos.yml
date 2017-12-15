@@ -30,6 +30,7 @@ config_schema:
   - ["i2c.debug", true]
   - ["app", "o", {title: "Custom app settings"}]
   - ["app.ssd1306_reset_pin", "i", 16, {title: "SSD1306 display reset pin"}]
+  - ["app.ssd1306_rotation", "i", 0, {title: "SSD1306 rotation (0=normal, 2=flip)"}]
   - ["app.darksky_interval", "i", 300, {title: "DarkSky weather forecast refresh interval in seconds (stick to < 1000/day"}]
   - ["app.darksky_key", "s", "", {title: "DarkSky API key (https://darksky.net/dev/register)"}]
 

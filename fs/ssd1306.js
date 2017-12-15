@@ -8,10 +8,13 @@ Adafruit_SSD1306._proto.setFont = function(fontName) { Adafruit_SSD1306._sfn(thi
 
 let SSD1306 = {
 
-    init: function () {
+    init: function (rotation) {
         let display = Adafruit_SSD1306.create_i2c(Cfg.get('app.ssd1306_reset_pin'), Adafruit_SSD1306.RES_128_64);
         display.begin(Adafruit_SSD1306.SWITCHCAPVCC, 0x3C, true);
-
+        if (rotation === undefined) {
+            rotation = Cfg.get('app.ssd1306_rotation');
+        }
+        display.setRotation(rotation);
         display.splash();
         display.display();
 
